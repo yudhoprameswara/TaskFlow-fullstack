@@ -97,7 +97,30 @@ Fullstack task management system developed as a recruitment test case. This proj
     npm run dev
     ```
 
-## Testing
+---
+
+## 🐳 Docker Deployment (Recommended)
+
+The easiest way to run the entire stack is using Docker Compose.
+
+1.  **Environment Variables:**
+    Ensure you have a `.env` file in the root directory with the following variables:
+    ```env
+    MONGODB_URI=your_mongodb_uri
+    JWT_SECRET=your_jwt_secret
+    ```
+2.  **Run with Compose:**
+    ```bash
+    docker-compose up --build
+    ```
+3.  **Access the app:**
+    - Frontend: `http://localhost:3000`
+    - Backend API: `http://localhost:5000`
+    - API Docs: `http://localhost:5000/api-docs`
+
+---
+
+## 🧪 Testing
 
 Run backend tests:
 ```bash
