@@ -1,4 +1,6 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
+import path from 'path';
+import fs from 'fs';
 import express from 'express';
 import cors from 'cors';
 import swaggerJsdoc from 'swagger-jsdoc';
@@ -90,7 +92,24 @@ app.use(errorHandler);
 const PORT = parseInt(process.env.PORT ?? '5000', 10);
 
 const startServer = async (): Promise<void> => {
+  // Load environment variables
+  const envPath = path.resolve(__dirname, '../.env');
+  if (fs.existsSync(envPath)) {
+    dotenv.config({ path: envPath });
+  } else {
+    // Fallback to current working directory
+    dotenv.config();
+  }
+
   // Check critical environment variables
+  if (!process.env.MONGODB_URI) {
+    console.error('❌ FATAL ERROR: MONGODB_URI is not defined in environment variables.');
+    console.error(`📂 Current Working Directory: ${process.cwd()}`);
+    console.error(`📄 Searching for .env at: ${envPath}`);
+    console.error('👉 Please set MONGODB_URI in your .env file or Render Dashboard (Environment tab).');
+    process.exit(1);
+  }
+
   if (!process.env.JWT_SECRET) {
     console.warn('⚠️ WARNING: JWT_SECRET is not defined. Authentication will fail.');
   }

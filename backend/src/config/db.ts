@@ -8,9 +8,9 @@ export const connectDB = async (): Promise<void> => {
   const uri = process.env.MONGODB_URI;
 
   if (!uri) {
-    console.error('❌ FATAL ERROR: MONGODB_URI is not defined in environment variables.');
-    console.error('👉 Please set MONGODB_URI in your Render Dashboard (Environment tab).');
-    process.exit(1);
+    // This should theoretically not be hit if server.ts check passes, 
+    // but kept as a simple safety check.
+    throw new Error('MONGODB_URI is not defined');
   }
 
   try {
